@@ -41,14 +41,27 @@ endfunction
 
 " Checks if a file is executable by the current user
 function! sync#files#IsExecutable(filepath)
-    silent execute '!test -x' a:filepath
+    " lidong fix screen noise
+    if executable(a:filepath)
+        return 1
+    else
+        return 0
+    endif
+    " silent execute '!test -x' a:filepath
 
-    return 0 == v:shell_error
+    " return 0 == v:shell_error
 endfunction
 
 " Checks if a file is a symbolic link
 function! sync#files#IsSymlink(filepath)
-    silent execute '!test -L' a:filepath
+    " lidong fix scree noise
+    if getftype(a:filepath) == 'link'
+        return 1
+    else
+        return 0
+    endif
+        
+    " silent execute '!test -L' a:filepath
 
-    return 0 == v:shell_error
+    " return 0 == v:shell_error
 endfunction

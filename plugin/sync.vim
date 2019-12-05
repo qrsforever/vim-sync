@@ -100,13 +100,18 @@ function! s:SyncCreateVimUploadCommand()
         endif
     else
         if s:SyncUseAsyncRun()
-            let l:command = 'AsyncRun ' . l:file_command
+            "lidong mod from: https://github.com/erraX/vim-sync
+            if g:sync_async_silent
+                let l:command = 'AsyncRun -raw ' . l:file_command
+            else
+                let l:command = 'AsyncRun' . l:file_command
+            endif
         else
             let l:command = '!' . l:file_command
         endif
     endif
 
-    echo l:command
+    " echo l:command
     return l:command
 endfunction
 
@@ -152,5 +157,6 @@ function! g:SyncDownloadFile()
 endfunction
 
 " Standard mappings
-nmap <leader>su :call g:SyncUploadFile()<CR>
-nmap <leader>sd :call g:SyncDownloadFile()<CR>
+" lidong commont it, configure from conf.vim
+" nmap <leader>su :call g:SyncUploadFile()<CR>
+" nmap <leader>sd :call g:SyncDownloadFile()<CR>
